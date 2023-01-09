@@ -18,15 +18,19 @@ BG = pygame.image.load("assets/Menu_image.png")
 def get_font(size):
     return pygame.font.Font("assets/font.ttf", size)
 
-def play():
+
+def play_select():
     while True:
+        SCREEN.blit(BG, (0, 0))
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
-        SCREEN.fill("black")
-
-        PLAY_TEXT = get_font(45).render("This is the PLAY screen.", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+        PLAY_NEW = Button(image=None, pos=(640, 180), text_input="New Game", font=get_font(75), base_color='White', hovering_color="Green")
+        PLAY_NEW.changeColor(PLAY_MOUSE_POS)
+        PLAY_NEW.update(SCREEN)
+          
+        PLAY_LOAD = Button(image=None, pos=(640, 320), text_input="Load Game", font=get_font(75), base_color='White', hovering_color="Green")
+        PLAY_LOAD.changeColor(PLAY_MOUSE_POS)
+        PLAY_LOAD.update(SCREEN)
 
         PLAY_BACK = Button(image=None, pos=(640, 460), 
                             text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
@@ -41,10 +45,28 @@ def play():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_NEW.checkForInput(PLAY_MOUSE_POS):
+                    new_game()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_LOAD.checkForInput(PLAY_MOUSE_POS):
+                    main_menu()            
+
 
         pygame.display.update()
 
-#Options function that switches to the options screen
+
+def new_game():
+    while True:
+
+      NEW_MOUSE_POS = pygame.mouse.get_pos()
+      SCREEN.fill("white")
+      PLAY_NEW = Button(image=None, pos=(640, 180), text_input="hehehe", font=get_font(75), base_color='White', hovering_color="Green")
+      PLAY_NEW.changeColor(NEW_MOUSE_POS)
+      PLAY_NEW.update(SCREEN)
+
+      pygame.display.update()
+
 def options():
     while True:
         #Gets the moise position for button collisions
@@ -74,6 +96,7 @@ def options():
 
         pygame.display.update()
 
+
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))
@@ -102,7 +125,7 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    play()
+                    play_select()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):

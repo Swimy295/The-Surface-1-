@@ -1,16 +1,7 @@
 import pygame, sys, time
 from pygame.locals import QUIT
 from button import Button
-from pygame import Color, Surface
 
-
-
-
-
-
-intro = 0
-
-#Initializes the screen and sets dimensions
 pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 
@@ -21,9 +12,8 @@ BG = pygame.image.load("assets/Menu_image.png")
 def get_font(size):
     return pygame.font.Font("assets/font.ttf", size)
 
-
-
 #Defines the main menu screen allowing the use of the options, play, and quit button. 
+  
 def main_menu():
     while True:
 
@@ -58,10 +48,10 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                     play_select()
-                    break
+                    return
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options()
-                    break
+                    return
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
@@ -69,10 +59,8 @@ def main_menu():
         pygame.display.update()
 
 
-
-
-
 #Options screen that shows the controls of the game
+      
 def options():
     while True:
         #Gets the moise position for button collisions
@@ -136,20 +124,19 @@ def play_select():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
-                    break
+                    return
+                  
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_NEW.checkForInput(PLAY_MOUSE_POS):
-                    
                     new_game()
-                    break
+                    return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_LOAD.checkForInput(PLAY_MOUSE_POS):
                     
-                    main_menu()            
-                    break
+                    main_menu()   
+                    return
+                    
         pygame.display.update()
-
-
 
 
 #Gets the input for the user's name using the console. Works best with different tabs.
@@ -192,7 +179,7 @@ def new_game():
             break
         break
     intro_newsave()
-
+  
 
 
 #Intro/new save where it plays a short intro sequence and also saves the name into a new file
@@ -246,13 +233,5 @@ def intro_newsave():
 
     #pause for 7 seconds
     time.sleep(7)
-    break
-  end_intro()
-
-def end_intro():
-  while True:
-    global intro
-    intro += 1
-    SCREEN.fill("White")
-    pygame.display.update()
     
+    return

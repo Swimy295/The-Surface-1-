@@ -11,7 +11,6 @@ from level import Level
 
 #Starts the main startup menu system
 
-s.main_menu()
 
 class Game:
 	def __init__(self):

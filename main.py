@@ -9,8 +9,11 @@ import pygame, sys
 import settings as se
 from level import Level
 
+import save as sa
+
 #Starts the main startup menu system
 
+s.main_menu()
 
 class Game:
 	def __init__(self):
@@ -21,15 +24,17 @@ class Game:
 		pygame.display.set_caption('The Surface')
 		self.clock = pygame.time.Clock()
 
+    #Imports the level class
 		self.level = Level()
 	
 	def run(self):
+    #Checks events
 		while True:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					sys.exit()
-
+      
 			self.screen.fill('black')
 			self.level.run()
 			pygame.display.update()

@@ -3,10 +3,10 @@ import settings as se
 from tile import Tile
 from player import Player
 import support as su
-from random import choice
 from weapon import Weapon
 from ui import UI
 
+#Level class
 class Level:
 	def __init__(self):
 
@@ -26,6 +26,7 @@ class Level:
 		# user interface 
 		self.ui = UI()
 
+  #Uses support class to us ethe csv files
 	def create_map(self):
 		layouts = {
 			'boundary': su.import_csv_layout('map/map_FloorBlocks.csv'),
@@ -37,6 +38,7 @@ class Level:
 			'objects': su.import_folder('graphics/objects')
 		}
 
+    #Sets the borders for the collisons. multimples the column and row size by the tilesizes to find the bounderies
 		for style,layout in layouts.items():
 			for row_index,row in enumerate(layout):
 				for col_index, col in enumerate(row):
@@ -49,28 +51,32 @@ class Level:
 							surf = graphics['objects'][int(col)]
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
+    #Initiallizes the player
 		self.player = Player((2000,1430),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_attack)
-	
+
+  #Attacks
 	def create_attack(self):
 		
 		self.current_attack = Weapon(self.player,[self.visible_sprites])
 
+  #kills the attack sprite
 	def destroy_attack(self):
 		if self.current_attack:
 			self.current_attack.kill()
 		self.current_attack = None
 
+  #Runs the functions
 	def run(self):
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)
 		self.visible_sprites.update()
 		self.ui.display(self.player)
 
-
+#Camera setup to follow the player
 class YSortCameraGroup(pygame.sprite.Group):
 	def __init__(self):
 
-		# general setup 
+		# general setup. Gets half of the distance around the player and then offsets it to lock onto the player
 		super().__init__()
 		self.display_surface = pygame.display.get_surface()
 		self.half_width = self.display_surface.get_size()[0] // 2
@@ -81,6 +87,7 @@ class YSortCameraGroup(pygame.sprite.Group):
 		self.floor_surf = pygame.image.load('graphics/tilemap/ground.png').convert()
 		self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
 
+  #Draws the player in the offset
 	def custom_draw(self,player):
 
 		# getting the offset 

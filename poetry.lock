@@ -360,6 +360,14 @@ dev = ["pytest (>=7.0.1)", "pytest-timeout (>=2.1.0)", "build (>=0.7.0)"]
 doc = ["pytoolconfig", "sphinx (>=4.5.0)", "sphinx-autodoc-typehints (>=1.18.1)", "sphinx-rtd-theme (>=1.0.0)"]
 
 [[package]]
+name = "save"
+version = "0.1"
+description = "A very simple module to safely save data to files in python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "see"
 version = "1.4.1"
 description = "dir for humans"
@@ -454,7 +462,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "e655bde801694191c388fd6b073ca77b933a7f10bd49bb2649e85a4221ee09b9"
+content-hash = "d6865f82748086ca060aaccfc087d67f4bdcd3ef5ec8f4184d3ed1c5bc1cb38a"
 
 [metadata.files]
 appnope = []
@@ -486,6 +494,7 @@ python-lsp-jsonrpc = []
 python-lsp-server = []
 pytoolconfig = []
 rope = []
+save = []
 see = []
 six = []
 stack-data = []

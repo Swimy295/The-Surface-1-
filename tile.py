@@ -1,8 +1,12 @@
 import pygame 
 import settings as se
 
+#Tile class
 class Tile(pygame.sprite.Sprite):
+    #Defines the tilesizes
 	def __init__(self,pos,groups,sprite_type,surface = pygame.Surface((se.TILESIZE,se.TILESIZE))):
+		
+    #gets the sprite typs and then turns it into a colliding object
 		super().__init__(groups)
 		self.sprite_type = sprite_type
 		self.image = surface

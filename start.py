@@ -69,12 +69,21 @@ def options():
         #Fills the screen with white and overlaps the previous screen
         SCREEN.fill("white")
 
-        #Puts in the text for the options placeholder for future changes, makes rectangle and places it in the same position
-        OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
+        keys = pygame.image.load("assets/arrow.png")
+        SCREEN.blit(keys, (200, 200))
+
+        Move_TEXT = get_font(20).render("Movement Keys", True, "#00F3FF")
+        Move_RECT = Move_TEXT.get_rect(center=(700, 240))
+        SCREEN.blit(Move_TEXT, Move_RECT)
+
+        k_key = pygame.image.load("assets/k_key.png")
+        SCREEN.blit(k_key, (200, 390))
         
-        OPTIONS_BACK = Button(image=None, pos=(640, 460), 
+        Switch_TEXT = get_font(20).render("Switch Weapons", True, "#00F3FF")
+        Switch_RECT = Move_TEXT.get_rect(center=(700, 400))
+        SCREEN.blit(Switch_TEXT, Switch_RECT)
+        
+        OPTIONS_BACK = Button(image=None, pos=(640, 560), 
                             text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
@@ -133,7 +142,7 @@ def play_select():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_LOAD.checkForInput(PLAY_MOUSE_POS):
                     
-                    main_menu()   
+                    load() 
                     return
                     
         pygame.display.update()
@@ -235,3 +244,19 @@ def intro_newsave():
     time.sleep(7)
     
     return
+
+def load():
+  global NAME
+  f = open("load.txt", "r")
+  load_saves = f.readlines()
+  NAME = str(load_saves[0][:-1])
+
+  SCREEN.fill("White")
+
+  #First text that makes the intro more dramatic and loads it seperately and blits it onto the screen
+  return_text = get_font(30).render("Welcome back " + NAME, True, "#00F3FF")
+  SCREEN.blit(return_text, (140, 150))
+  pygame.display.update()
+
+  time.sleep(5)
+  return

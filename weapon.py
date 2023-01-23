@@ -1,15 +1,17 @@
 import pygame 
 
+
+#Weapon class
 class Weapon(pygame.sprite.Sprite):
 	def __init__(self,player,groups):
 		super().__init__(groups)
 		direction = player.status.split('_')[0]
 
-		# graphic
+		# graphics for the weapon based on direction and the weapon
 		full_path = f'graphics/weapons/{player.weapon}/{direction}.png'
 		self.image = pygame.image.load(full_path).convert_alpha()
 		
-		# placement
+		# placement for the weapon. Ex. if direction was right and then space is pressed, weapon would appear tight using the vectors
 		if direction == 'right':
 			self.rect = self.image.get_rect(midleft = player.rect.midright + pygame.math.Vector2(0,16))
 		elif direction == 'left': 

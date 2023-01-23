@@ -1,5 +1,6 @@
 import pygame
 import settings as se
+import start as s
 
 class UI:
 	def __init__(self):
@@ -19,7 +20,7 @@ class UI:
 			weapon = pygame.image.load(path).convert_alpha()
 			self.weapon_graphics.append(weapon)
 
-
+#Bars for the health and energy
 	def show_bar(self,current,max_amount,bg_rect,color):
 		# draw bg 
 		pygame.draw.rect(self.display_surface,se.UI_BG_COLOR,bg_rect)
@@ -34,17 +35,26 @@ class UI:
 		pygame.draw.rect(self.display_surface,color,current_rect)
 		pygame.draw.rect(self.display_surface,se.UI_BORDER_COLOR,bg_rect,3)
 
-	def show_exp(self,exp):
-		text_surf = self.font.render(str(int(exp)),False,se.TEXT_COLOR)
-		x = self.display_surface.get_size()[0] - 20
-		y = self.display_surface.get_size()[1] - 20
-		text_rect = text_surf.get_rect(bottomright = (x,y))
+#Shows the primary stats such as exp and name
+	def show_stats(self,exp, NAME):
+		#Names the two surfaces and then sets the variable identities
+		Name_surf = self.font.render(("NAME: " + NAME),False,se.TEXT_COLOR)
+		Name_rect = Name_surf.get_rect(topright = (1190, 20))
+		Exp_surf = self.font.render(("EXP: " + str(exp)), False, se.TEXT_COLOR)
+		Exp_rect = Exp_surf.get_rect(topright = (1190, 100))
 
-		pygame.draw.rect(self.display_surface,se.UI_BG_COLOR,text_rect.inflate(20,20))
-		self.display_surface.blit(text_surf,text_rect)
-		pygame.draw.rect(self.display_surface,se.UI_BORDER_COLOR,text_rect.inflate(20,20),3)
+    #Places all of the surfaces outlines in the created surfaces and rectangle above
+		pygame.draw.rect(self.display_surface,se.UI_BG_COLOR,Name_rect.inflate(200,100))
+		self.display_surface.blit(Name_surf, Name_rect)
+		pygame.draw.rect(self.display_surface,se.UI_BORDER_COLOR,Name_rect.inflate(20,20),3)
 
+		pygame.draw.rect(self.display_surface,se.UI_BG_COLOR,Exp_rect.inflate(180,100))
+		self.display_surface.blit(Exp_surf, Exp_rect)
+		pygame.draw.rect(self.display_surface,se.UI_BORDER_COLOR,Exp_rect.inflate(20,20),3)
+
+  #Selection for the weapon in the bottom left.
 	def selection_box(self,left,top, has_switched):
+		#Places the rectangle with the border for the weapon overlay
 		bg_rect = pygame.Rect(left,top,se.ITEM_BOX_SIZE,se.ITEM_BOX_SIZE)
 		pygame.draw.rect(self.display_surface,se.UI_BG_COLOR,bg_rect)
 		if has_switched:
@@ -53,18 +63,21 @@ class UI:
 			pygame.draw.rect(self.display_surface,se.UI_BORDER_COLOR,bg_rect,3)
 		return bg_rect
 
+#weapon overlay that places the weapon onto the selectin box
 	def weapon_overlay(self,weapon_index,has_switched):
+
+    #Uses the weapon index to see if the weapon changes and then change the graphics based on the weapon
 		bg_rect = self.selection_box(10,630,has_switched)
 		weapon_surf = self.weapon_graphics[weapon_index]
 		weapon_rect = weapon_surf.get_rect(center = bg_rect.center)
 
 		self.display_surface.blit(weapon_surf,weapon_rect)
 
+#Updates the display with all of the variables
 	def display(self,player):
-		self.show_bar(player.health,player.stats['health'],self.health_bar_rect,se.HEALTH_COLOR)
-		self.show_bar(player.energy,player.stats['energy'],self.energy_bar_rect,se.ENERGY_COLOR)
+		self.show_bar(player.health, 100, self.health_bar_rect,se.HEALTH_COLOR)
+		self.show_bar(player.energy, 100, self.energy_bar_rect,se.ENERGY_COLOR)
 
-		self.show_exp(player.exp)
+		self.show_stats(player.exp, s.NAME)
 
 		self.weapon_overlay(player.weapon_index,not player.can_switch_weapon)
-		# self.selection_box(80,635) # magic

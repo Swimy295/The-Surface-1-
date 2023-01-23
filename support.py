@@ -1,7 +1,9 @@
+#Imports the reader for the csv files
 from csv import reader
 from os import walk
 import pygame
 
+#Enables to import layouts from the csv file
 def import_csv_layout(path):
 	terrain_map = []
 	with open(path) as level_map:
